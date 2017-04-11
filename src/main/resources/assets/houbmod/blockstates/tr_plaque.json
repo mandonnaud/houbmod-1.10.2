@@ -1,0 +1,8 @@
+{
+   "variant=tr_plaque_rota": {
+       "normal": { "model": "houbmod:tr_plaque_rota" }
+   },
+   "variant=tr_plaque_roth": {
+       "normal": { "model": "houbmod:tr_plaque_roth" }
+   }
+}

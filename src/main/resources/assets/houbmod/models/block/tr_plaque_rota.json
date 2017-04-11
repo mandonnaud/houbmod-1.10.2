@@ -1,0 +1,7 @@
+{
+   "parent": "block/cube_all",
+   "textures": {
+       "end": "chisel:blocks/rotA",
+	   "side": "chisel:blocks/cote"
+   }
+}

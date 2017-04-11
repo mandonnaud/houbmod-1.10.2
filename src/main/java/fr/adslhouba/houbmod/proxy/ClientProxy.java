@@ -1,7 +1,8 @@
 package fr.adslhouba.houbmod.proxy;
 
+import java.io.File;
+
 import fr.adslhouba.houbmod.common.HoubMod;
-import fr.adslhouba.houbmod.common.entity.EntityProjectil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;

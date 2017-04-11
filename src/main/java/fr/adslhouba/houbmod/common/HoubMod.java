@@ -2,13 +2,8 @@ package fr.adslhouba.houbmod.common;
 
 import org.apache.logging.log4j.Logger;
 
-import fr.adslhouba.houbmod.common.block.cc.*;
 import fr.adslhouba.houbmod.common.block.turtlerally.*;
-import fr.adslhouba.houbmod.common.entity.EntityProjectil;
-import fr.adslhouba.houbmod.common.items.ItemProjectil;
-import fr.adslhouba.houbmod.common.items.cc.*;
 import fr.adslhouba.houbmod.proxy.CommonProxy;
-import fr.adslhouba.houbmod.utils.houbPeripheral;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -40,7 +35,7 @@ public class HoubMod {
         @Override
         public Item getTabIconItem()
         {
-            return Item.getItemFromBlock(HoubMod.trPlaque);
+            return Item.getItemFromBlock(HoubMod.tr_plaque);
         }
 
         @SideOnly(Side.CLIENT)
@@ -52,7 +47,7 @@ public class HoubMod {
     @SidedProxy(clientSide = "fr.adslhouba.houbmod.proxy.ClientProxy", serverSide = "fr.adslhouba.houbmod.proxy.CommonProxy")
     public static CommonProxy proxy;
     
-    public static Block trPlaque, trTapis, trTapisDroite, trTapisGauche, genLaser, ccMaj;
+    public static Block trPlaque, tr_plaque, trTapisDroite, trTapisGauche, genLaser, ccMaj;
 	public static Item projectil, itemMaj;
     
 	public static Logger logger;
@@ -63,9 +58,11 @@ public class HoubMod {
     	logger = event.getModLog(); // initialise le logger.  event.getModLog() retourne un logger avec votre modid
     	proxy.preInit(event.getSuggestedConfigurationFile());
     	
-		trPlaque = new BlockTRPlaque();
-		GameRegistry.registerBlock(trPlaque,BlockTRPlaqueItem.class,"trplaque", MODID, new Object[]{BlockTRPlaque.subBlock});
+    	tr_plaque = new BlockTRPlaque();
+		GameRegistry.registerBlock(tr_plaque, "tr_plaque");
+		//GameRegistry.registerBlock(trPlaque,BlockTRPlaqueItem.class,"trplaque", MODID, new Object[]{BlockTRPlaque.subBlock});
 		
+		/*
 		trTapis = new BlockTRTapis().setUnlocalizedName("trtapis");
 		GameRegistry.registerBlock(trTapis,BlockTRTapisItem.class,"trtapis");
 		
@@ -85,6 +82,7 @@ public class HoubMod {
 		
 		ccMaj = new blockMaj();
 		GameRegistry.registerBlock(ccMaj, "ccUpgrader");
+		*/
 		
 		/*
 		itemMaj = new itemMaj().setUnlocalizedName("itemHbMaj").setTextureName(HoubMod.MODID + ":maj").setCreativeTab(HoubMod.HoubModCreativeTabs);
@@ -92,10 +90,11 @@ public class HoubMod {
 		*/
 		
 		
-
+/*
 		GameRegistry.registerTileEntity(TileEntityGenLaser.class, "houbmod:genlaserentity");
 		GameRegistry.registerTileEntity(TileEntityMaj.class, "houbmod:tileEntityMaj");
 		EntityRegistry.registerModEntity(EntityProjectil.class, "tire", 0, this, 32, 1, false);
+		*/
 		//event.getModConfigurationDirectory(),
 		
 		//majApi.init(event.getModConfigurationDirectory());
@@ -106,8 +105,9 @@ public class HoubMod {
     public void init(FMLInitializationEvent event)
     {
 		proxy.init();
+		proxy.registerBlockTexture(tr_plaque, "tr_plaque");
 		
-		ComputerCraftAPI.registerPeripheralProvider(new houbPeripheral.Provider());
+		//ComputerCraftAPI.registerPeripheralProvider(new houbPeripheral.Provider());
 
 		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandlerMaj());
 		
@@ -116,16 +116,16 @@ public class HoubMod {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		GameRegistry.addRecipe(new ItemStack(trTapis, 9, 0), new Object[] {"XXX", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 1), 'Y',new ItemStack(Blocks.WOOL, 1, 15)});
-		GameRegistry.addRecipe(new ItemStack(trTapisGauche, 9, 0), new Object[] {"YXX", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 1), 'Y',new ItemStack(Blocks.WOOL, 1, 15)});
-		GameRegistry.addRecipe(new ItemStack(trTapisDroite, 9, 0), new Object[] {"YYX", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 1), 'Y',new ItemStack(Blocks.WOOL, 1, 15)});
+		//GameRegistry.addRecipe(new ItemStack(trTapis, 9, 0), new Object[] {"XXX", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 1), 'Y',new ItemStack(Blocks.WOOL, 1, 15)});
+		//GameRegistry.addRecipe(new ItemStack(trTapisGauche, 9, 0), new Object[] {"YXX", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 1), 'Y',new ItemStack(Blocks.WOOL, 1, 15)});
+		//GameRegistry.addRecipe(new ItemStack(trTapisDroite, 9, 0), new Object[] {"YYX", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 1), 'Y',new ItemStack(Blocks.WOOL, 1, 15)});
 		
-		GameRegistry.addRecipe(new ItemStack(trPlaque, 9, 0), new Object[] {"YXY", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 11), 'Y',new ItemStack(Blocks.WOOL, 1, 8)});
-		GameRegistry.addRecipe(new ItemStack(trPlaque, 9, 1), new Object[] {"YXY", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 14), 'Y',new ItemStack(Blocks.WOOL, 1, 8)});
+		GameRegistry.addRecipe(new ItemStack(tr_plaque, 9, 0), new Object[] {"YXY", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 11), 'Y',new ItemStack(Blocks.WOOL, 1, 8)});
+		GameRegistry.addRecipe(new ItemStack(tr_plaque, 9, 1), new Object[] {"YXY", "YYY", "   ", 'X', new ItemStack(Blocks.WOOL, 1, 14), 'Y',new ItemStack(Blocks.WOOL, 1, 8)});
 		
-		GameRegistry.addRecipe(new ItemStack(trPlaque, 1, 1), new Object[] {"X ", "  ", 'X', new ItemStack(trPlaque, 1, 0)});
-		GameRegistry.addRecipe(new ItemStack(trPlaque, 1, 0), new Object[] {"X ", "  ", 'X', new ItemStack(trPlaque, 1, 1)});
-		
+		GameRegistry.addRecipe(new ItemStack(tr_plaque, 1, 1), new Object[] {"X ", "  ", 'X', new ItemStack(tr_plaque, 1, 0)});
+		GameRegistry.addRecipe(new ItemStack(tr_plaque, 1, 0), new Object[] {"X ", "  ", 'X', new ItemStack(tr_plaque, 1, 1)});
+		/*
 		GameRegistry.addRecipe(new ItemStack(trTapis, 1, 0), new Object[] {"X ", "  ", 'X', new ItemStack(trTapisDroite, 1, 0)});
 		GameRegistry.addRecipe(new ItemStack(trTapisDroite, 1, 0), new Object[] {"X ", "  ", 'X', new ItemStack(trTapisGauche, 1, 0)});
 		GameRegistry.addRecipe(new ItemStack(trTapisGauche, 1, 0), new Object[] {"X ", "  ", 'X', new ItemStack(trTapis, 1, 0)});
@@ -147,6 +147,6 @@ public class HoubMod {
 				'R', Items.REDSTONE,
 				'G', Items.GOLD_INGOT,
 				'S', new ItemStack(Items.DYE,1,2)
-		});
+		});*/
 	}
 }

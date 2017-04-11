@@ -1,5 +1,5 @@
-tile.trplaque.roth.name=Turtle Rally - Rotating plate clockwise
-tile.trplaque.rota.name=Turtle Rally - Rotating plate counterclockwise
+tile.tr_plaque.roth.name=Turtle Rally - Rotating plate clockwise
+tile.tr_plaque.rota.name=Turtle Rally - Rotating plate counterclockwise
 tile.trtapis.name=Turtle Rally - Conveyor belt
 tile.trtapisdroite.name=Turtle Rally - Conveyor belt Right turn
 tile.trtapisgauche.name=Turtle Rally - Conveyor belt Left turn

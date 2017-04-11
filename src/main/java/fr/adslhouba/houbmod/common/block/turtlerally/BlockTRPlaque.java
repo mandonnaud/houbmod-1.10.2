@@ -5,34 +5,136 @@ import java.util.List;
 import fr.adslhouba.houbmod.common.HoubMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class BlockTRPlaque extends Block {
-	public IIcon icote, iroth, irota, rothAnim, rotaAnim;
-	public static String[] subBlock = new String[] {"roth", "rota"};
+	
+	public static final String NAME = "tr_plaque";
+	public static final PropertyEnum<BlockTRPlaque.EnumType> VARIANT = PropertyEnum.<BlockTRPlaque.EnumType>create("variant", BlockTRPlaque.EnumType.class);
+	
 	public BlockTRPlaque()
 	{	
 		super(Material.IRON);
-		this.setUnlocalizedName("trplaque");
-		this.setCreativeTab(HoubMod.HoubModCreativeTabs);
-		this.setResistance(5.0F);
-		this.setHardness(3.5F);
+		
+		setResistance(5.0F);
+		setHardness(3.5F);
+		setCreativeTab(HoubMod.HoubModCreativeTabs);
+		setDefaultState(this.getBlockState().getBaseState().withProperty(VARIANT, BlockTRPlaque.EnumType.FIRST));
 		
 		// worldObj.getBlockPowerInput(this.xCoord, this.yCoord, this.zCoord) 
-	}	
-	public void registerBlockIcons(IIconRegister iconRegister)
-	{
-		this.icote = iconRegister.registerIcon(HoubMod.MODID + ":cote");
-		this.iroth = iconRegister.registerIcon(HoubMod.MODID + ":rotH");
-		this.irota = iconRegister.registerIcon(HoubMod.MODID + ":rotA");
-		this.rothAnim = iconRegister.registerIcon(HoubMod.MODID + ":rothanim");
-		this.rotaAnim = iconRegister.registerIcon(HoubMod.MODID + ":rotaanim");
 	}
+	
+	@Override
+	   public int damageDropped(IBlockState state)
+	   {
+			return state.getValue(VARIANT).getMetadata();
+	   }
+
+		@Override
+		public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)  {
+		   for (BlockTRPlaque.EnumType type : BlockTRPlaque.EnumType.values())
+		   {
+		       list.add(new ItemStack(itemIn, 1, type.getMetadata()));
+		   }
+	   }
+
+	   @Override
+	   public IBlockState getStateFromMeta(int meta) {
+	       return this.getDefaultState().withProperty(VARIANT, BlockTRPlaque.EnumType.byMetadata(meta));
+	   }
+
+	   @Override
+	   public int getMetaFromState(IBlockState state)
+	   {
+	       return ((BlockTRPlaque.EnumType)state.getValue(VARIANT)).getMetadata();
+	   }
+
+	   @Override
+	   protected BlockStateContainer createBlockState()
+	   {
+	       return new BlockStateContainer(this, new IProperty[] {VARIANT});
+	   }
+	   public static enum EnumType implements IStringSerializable
+	   {
+	       // Nous allons définir ici les différents sous-blocs.
+		   FIRST(0, "tr_plaque_rota", "tr_plaque_rota"),
+		   SECOND(1, "tr_plaque_rotb", "tr_plaque_rotb");
+		   
+			private static final BlockTRPlaque.EnumType[] META_LOOKUP = new BlockTRPlaque.EnumType[values().length];
+			private final int meta;
+			private final String name;
+			private final String unlocalizedName;
+	      
+	       // Nous allons créer ici quelques variables que nous utiliserons dans les fonctions.
+
+	       private EnumType(int metaIn, String nameIn, String unlocalizedIn)
+	       {
+	    	   this.meta = metaIn;
+	    	   this.name = nameIn;
+	    	   this.unlocalizedName = unlocalizedIn;
+	       }
+
+	       public static String[] getUnlocalizedNames()
+	       {
+	           // Nous utiliserons cette fonction pour récupérer une liste des noms non-localisés.
+	    	   String[] names = new String[values().length];
+	            
+	    	    for (int i = 0; i < META_LOOKUP.length; i++)
+	    	        names[i] = META_LOOKUP[i].unlocalizedName;
+	    	            
+	    	    return names;
+	       }
+
+
+	       public int getMetadata()
+	       {
+	    	   return this.meta;
+	       }
+
+	       public static BlockTRPlaque.EnumType byMetadata(int meta)
+	       {
+	           // Nous allons ici obtenir la valeur dans l'énumération correspondant à la métadonnée passée en paramètre. Remplacez TutorialBlock par le nom de votre classe.
+	    	   if (meta < 0 || meta >= META_LOOKUP.length)
+	    	    {
+	    	        meta = 0;
+	    	    }
+
+	    	    return META_LOOKUP[meta];
+	       }
+
+	       public String toString()
+	       {
+	           // Nous allons renvoyer le nom de l'objet.
+	    	   return this.name;
+	       }
+
+	       public String getName()
+	       {
+	           // Nous allons ici aussi renvoyer le nom de l'objet.
+	    	   return this.name;
+	       }
+	       static
+	       {
+	           for (BlockTRPlaque.EnumType type : values())
+	           {
+	               META_LOOKUP[type.getMetadata()] = type;
+	           }
+	       }
+	   }
+	
+	/*
 	public void getSubBlocks(Item item, CreativeTabs tabs, List list)
 	{	
 		for(int i = 0; i < subBlock.length; i++)
@@ -97,5 +199,5 @@ public class BlockTRPlaque extends Block {
 			metadata-=2;
 		}
 		return metadata;
-	}
+	}*/
 }
